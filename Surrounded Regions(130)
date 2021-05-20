@@ -1,0 +1,45 @@
+class Solution {
+public:
+    void getans(vector<vector<char> >&board,int r,int c,int i,int j)
+    {
+        if(board[i][j]=='O')
+        {
+            board[i][j]='1';
+            if(i+1<r)getans(board,r,c,i+1,j);
+            if(i>1)getans(board,r,c,i-1,j);
+            if(j>1)getans(board,r,c,i,j-1);
+            if(j+1<c)getans(board,r,c,i,j+1);
+        }
+    }
+    void solve(vector<vector<char>>& board) 
+    {
+        int r=board.size();
+        if(r==0)return;
+        int c=board[0].size();
+        for(int i=0;i<r;i++)
+        {
+            if(board[i][0]=='O')
+                getans(board,r,c,i,0);
+            if(board[i][c-1]=='O')
+                getans(board,r,c,i,c-1);
+        }
+        for(int i=1;i<c-1;i++)
+        {
+            if(board[0][i]=='O')
+                getans(board,r,c,0,i);
+            if(board[r-1][i]=='O')
+                getans(board,r,c,r-1,i);
+        }
+        for(int i=0;i<r;i++)
+        {
+            for(int j=0;j<c;j++)
+            {
+                if(board[i][j]=='O')
+                    board[i][j]='X';
+            
+                if(board[i][j]=='1')
+                    board[i][j]='O';
+            }
+        }
+    }
+};
