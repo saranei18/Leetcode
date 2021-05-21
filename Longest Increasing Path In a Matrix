@@ -42,3 +42,40 @@ public:
         return res;
     }
 };
+
+
+METHOD 2:(Time limit excedeed)
+-----------------------------------
+
+class Solution {
+public:
+    int maxele=0;
+    void lic(vector<vector<int>>&matrix,int r,int c,int i,int j,int count,int prev)
+    {
+        if(i<0||i>=r||j<0||j>=c||matrix[i][j]<=prev)return ;
+        count++;
+        prev=matrix[i][j];
+        if(maxele<count)maxele=count;
+        lic(matrix,r,c,i+1,j,count,prev);
+        lic(matrix,r,c,i-1,j,count,prev);
+        lic(matrix,r,c,i,j+1,count,prev);
+        lic(matrix,r,c,i,j-1,count,prev);
+    }
+    int longestIncreasingPath(vector<vector<int>>& matrix) 
+    {
+        int r=matrix.size();
+        int c=matrix[0].size();
+        int res=0;
+        for(int i=0;i<r;i++)
+        {
+            for(int j=0;j<c;j++)
+            {
+                int prev=INT_MIN;
+                lic(matrix,r,c,i,j,0,prev);
+                res=max(res,maxele);
+                maxele=0;
+            }
+        }
+        return res;
+    }
+};
