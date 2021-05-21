@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int maxele=0;
+    int lic(vector<vector<int>>&matrix,int r,int c,int i,int j,int prev,vector<vector<int>>&dp)
+    {
+        if(i<0||i>=r||j<0||j>=c||matrix[i][j]<=prev)return 0;
+        if(dp[i][j])return dp[i][j];
+        int maxval=INT_MIN;
+        int val;
+        prev=matrix[i][j];
+        val = 1+lic(matrix,r,c,i+1,j,prev,dp);
+        maxval=max(maxval,val);
+        
+        val = 1+lic(matrix,r,c,i-1,j,prev,dp);
+        maxval=max(maxval,val);
+        
+        val = 1+lic(matrix,r,c,i,j+1,prev,dp);
+        maxval=max(maxval,val);
+        
+        val = 1+lic(matrix,r,c,i,j-1,prev,dp);
+        maxval=max(maxval,val);
+        
+        dp[i][j]=maxval;
+        return maxval;
+    }
+    int longestIncreasingPath(vector<vector<int>>& matrix) 
+    {
+    vector<vector<int>>dp(matrix.size(),vector<int>(matrix[0].size(),0));
+        int r=matrix.size();
+        int c=matrix[0].size();
+        int res=0;
+        for(int i=0;i<r;i++)
+        {
+            for(int j=0;j<c;j++)
+            {
+                int prev=INT_MIN;
+                int maxval=lic(matrix,r,c,i,j,prev,dp);
+                dp[i][j]=maxval;
+                res=max(maxval,res);
+            }
+        }
+        return res;
+    }
+};
