@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int count=0;
+    set<string>s1;
+    void permute(string tiles,string chosen)
+    {
+        if(tiles.length()==0&&s1.find(chosen)==s1.end())
+        {
+            count++;
+            s1.insert(chosen);
+        }
+        else
+        {
+            for(int i=0;i<tiles.length();i++)
+            {
+                //choose
+            char ch=tiles[i];
+            tiles.erase(i,1);
+            //explore with
+            chosen+=ch;
+            permute(tiles,chosen);
+            //explore without
+            chosen.erase(chosen.length()-1,1);
+            permute(tiles,chosen);
+            //unchoose
+            tiles.insert(i,1,ch);
+            }
+        }
+    }
+    int numTilePossibilities(string tiles) 
+    {
+        permute(tiles,"");
+        return count-1;
+    }
+};
