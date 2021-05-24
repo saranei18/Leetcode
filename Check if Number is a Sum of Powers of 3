@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool result=false;
+    void permute(int n,int power,int res)
+    {
+        if(res>n)return;
+        if(res==n)
+            result=true;
+        else
+        {
+            for(int i=power;i<16;i++)
+            {
+                
+                //choose
+                res+=pow(3,i);
+                //explore
+                permute(n,i+1,res);
+                //unchoose
+                res-=pow(3,i);
+                
+            }
+        }
+    }
+    bool checkPowersOfThree(int n) 
+    {
+        permute(n,0,0);    
+        return result;
+    }
+};
