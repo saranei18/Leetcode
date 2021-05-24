@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<string>result;
+    void permute(string s,string res,int index)
+    {
+        if(res.length()==s.length())
+        {
+            result.push_back(res);
+        }
+        else
+        {
+            if(s[index]>='0'&&s[index]<='9')
+                permute(s,res+s[index],index+1);
+            else 
+            {
+                permute(s,res+(char)(toupper(s[index])),index+1);
+                permute(s,res+(char)(tolower(s[index])),index+1);
+            }
+            
+        }
+    }
+    vector<string> letterCasePermutation(string s) 
+    {
+        permute(s,"",0);
+        return result;
