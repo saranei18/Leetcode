@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int res=INT_MIN;
+    vector<int>v;
+    void permute(vector<vector<int>>&grid,int i,int j,int counts)
+    {
+        if(i<0||i>=grid.size()||j<0||j>=grid[0].size()||grid[i][j]==0)return;
+        counts+=grid[i][j];
+        if(res<counts)res=counts;
+        int t=grid[i][j];
+        grid[i][j]=0;
+        permute(grid,i+1,j,counts);
+        permute(grid,i-1,j,counts);
+        permute(grid,i,j+1,counts);
+        permute(grid,i,j-1,counts);
+        grid[i][j]=t;
+    }
+    int getMaximumGold(vector<vector<int>>& grid) 
+    {
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid[0].size();j++)
+            {
+                if(grid[i][j]!=0)
+                {
+                    permute(grid,i,j,0);
+                }
+            }
+        }
+        return res;
+    }
+};
