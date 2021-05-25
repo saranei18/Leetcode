@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<string>>result;
+    void permute(string s,vector<string>&temp,int ind)
+    {
+        if(ind == s.length())
+        {
+            result.push_back(temp);
+        }
+        else
+        {
+            for(int i=ind;i<s.length();i++)
+            {
+                string str=s.substr(ind,i-ind+1);
+                string ptr=str;
+                reverse(ptr.begin(),ptr.end());
+                if(ptr==str)
+                {
+                    temp.push_back(ptr);
+                    permute(s,temp,i+1);
+                    temp.pop_back();
+                }
+            }
+        }
+    }
+    vector<vector<string>> partition(string s) 
+    {
+        vector<string>temp;
+        permute(s,temp,0);   
+        return result;
+    }
+};
