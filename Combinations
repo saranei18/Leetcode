@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>>result;
+    void permute(int limit,int n,vector<int>&chosen,int index)
+    {
+        if(chosen.size()>limit)return;
+        if(chosen.size()==limit)
+            result.push_back(chosen);
+        else
+        {
+            for(int i=index;i<=n;i++)
+            {
+                //choose
+                chosen.push_back(i);
+                //explore
+                permute(limit,n,chosen,i+1);
+                //unchoose
+                chosen.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> combine(int n, int k) 
+    {
+        vector<int>chosen;
+        permute(k,n,chosen,1);
+        return result;
+    }
+};
