@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>>result;
+    void permute(int limit,int target,int currsum,vector<int>temp,int index)
+    {
+        if(currsum>target||temp.size()>limit)return;
+        if(temp.size()==limit&&currsum==target)
+            result.push_back(temp);
+        else
+        {
+            for(int i=index;i<=9;i++)
+            {
+                //choose
+                currsum+=i;
+                temp.push_back(i);
+                //explore
+                permute(limit,target,currsum,temp,i+1);
+                //unchoose
+                currsum-=i;
+                temp.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> combinationSum3(int k, int n) 
+    {
+        vector<int>temp;
+        permute(k,n,0,temp,1);
+        return result;
+    }
+};
