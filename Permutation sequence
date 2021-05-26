@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int count=0;
+    string result="";
+    int flag=0;
+    void permute(string res,string choosen,int k)
+    {
+        if(flag==1)return;
+        if(res.empty())
+        {
+            count++;
+            if(count==k)
+            {flag=1;result=choosen;}
+        }
+        else
+        {
+            for(int i=0;i<res.length();i++)
+            {
+                //chosen
+                char c=res[i];
+                choosen+=c;
+                res.erase(i,1);
+                //explore
+                permute(res,choosen,k);
+                //unchoose
+                res.insert(i,1,c);
+                choosen.erase(choosen.length()-1);
+            }
+        }
+    }
+    string getPermutation(int n, int k) 
+    {
+        string res="";
+        for(int i=1;i<=n;i++)
+        {
+            res+=to_string(i);
+        }
+        permute(res,"",k);
+        return result;
+    }
+};
