@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int counts=0;
+    void permute(vector<char>&nums,string &res,int digits)
+    {
+        if(res[0]=='0')
+        {
+            return;
+        }
+        if(res.length()<digits)
+             counts++;
+        if(res.length()==digits)
+        {
+            counts++;return;
+        }
+        else
+        {
+             for(int i=0;i<nums.size();i++)
+             {
+                  //choose
+                   char t=nums[i];
+                   res.push_back(t);
+                   nums.erase(nums.begin()+i);
+                 
+                   //explore
+                   permute(nums,res,digits);
+                 
+                   //unchoose
+                   nums.insert(nums.begin()+i,t);
+                   res.pop_back();
+             }
+        }
+    }
+    int countNumbersWithUniqueDigits(int n) 
+    {
+        vector<char> nums{'0','1','2','3','4','5','6','7','8','9'};
+        string res="";
+        permute(nums,res,n);
+        return counts;
+    }
+};
