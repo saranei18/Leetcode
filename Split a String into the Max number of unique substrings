@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int counts=0;
+    void permute(int low,int high,string &s,unordered_set<string>&st)
+    {
+        if(low>high)
+        {
+            counts=max(counts,static_cast<int>(st.size()));
+            return ;
+        }
+        for(int i=low;i<=high;i++)
+        {
+            string temp=s.substr(low,i-low+1);
+            if(st.find(temp)==st.end())
+            {
+                 //choose
+                 st.insert(temp);
+                //explore
+                 permute(i+1,high,s,st);
+                 //unchoose
+                 st.erase(temp);
+            }
+        }   
+    }
+    int maxUniqueSplit(string s) 
+    {
+        unordered_set<string>st;
+        permute(0,s.length()-1,s,st); 
+        return counts;
+    }
+};
