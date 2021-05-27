@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool permute(string num,vector<int>&res,int index)
+    {
+        if(index==num.length()&&res.size()>2)return true;
+        
+        for(int i=index;i<num.length();i++)
+        {
+            string str=num.substr(index,i-index+1);
+            
+            if(str.size()>1 && str[0]=='0')return false;
+            
+            long long sum=stol(str);
+            
+            int size =res.size();
+            
+            if(sum>=INT_MAX)return false;
+            
+            
+
+            if(size<2 ||(long long )res[size-1]+res[size-1]==sum)
+            {
+                //choose
+                res.push_back(sum);
+                //explore
+                if(permute(num,res,i+1))return true;
+                //unchoose
+                res.pop_back();
+            }
+        }
+        return false;
+    }
+    vector<int> splitIntoFibonacci(string num) 
+    {
+        vector<int>res;
+        permute(num,res,0);
+        return res;
+    }
+};
