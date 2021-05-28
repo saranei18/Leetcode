@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool permute(string num,vector<int>res,int index)
+    {
+        if(index==num.length()&&res.size()>2)return true;
+        for(int i=index;i<num.length();i++)
+        {
+            string str=num.substr(index,i-index+1);
+            
+            if(str.size()>1&&str[0]=='0')return false;
+            
+            unsigned long long sum=stoull(str);
+            
+            //if(sum>=INT_MAX)return false;
+            
+            int size=res.size();
+            
+            if(size<2 || (unsigned long long)res[size-1]+res[size-2]==sum)
+            {
+                //choose
+                res.push_back(sum);
+                //explore
+                if(permute(num,res,i+1))return true;
+                //unchoose
+                res.pop_back();                
+            }
+        }
+        return false;
+    }
+    bool isAdditiveNumber(string num) 
+    {
+        vector<int>res;
+        bool result=permute(num,res,0);
+        return result;
+    }
+};
