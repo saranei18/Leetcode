@@ -1,0 +1,55 @@
+
+bottom - up approach
+----------------------------
+
+class Solution {
+public:
+    int maxSumAfterPartitioning(vector<int>& arr, int k) 
+    {
+        int n=arr.size();
+        vector<int>dp(n+1,0);
+        for(int i=n-1;i>=0;i--)
+        {
+            int maxnum=arr[i],maxsum=arr[i];
+            for(int j=i;j<i+k&& j<n;j++)
+            {
+                maxnum=max(maxnum,arr[j]);
+                maxsum=max(maxsum,maxnum*(j-i+1)+dp[j+1]);
+            }
+            dp[i]=maxsum;
+        }
+        return dp[0];
+    }
+};
+
+
+Top_down Approach  (RECURSION)
+------------------------------
+
+
+//top - down approch
+class Solution {
+public:
+    int permute(vector<int>&arr,int index,int k,vector<int>&dp)
+    {
+        int n=arr.size();
+        if(index>=n)
+            return 0;
+        if(dp[index]!=-1)
+            return dp[index];
+        
+        int maxsum=arr[index],maxnum=arr[index];
+        for(int i=index;i<index+k && i<n;i++)
+        {
+            maxnum=max(maxnum,arr[i]);
+            maxsum=max(maxsum,maxnum*(i-index+1)+permute(arr,i+1,k,dp));
+        }
+        return dp[index]=maxsum;
+    }
+    int maxSumAfterPartitioning(vector<int>& arr, int k) 
+    {
+        int n=arr.size();
+        vector<int>dp(n+1,-1);
+        return permute(arr,0,k,dp);
+    }
+};
