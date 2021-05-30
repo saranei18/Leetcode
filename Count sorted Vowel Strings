@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int countVowelStrings(int n) 
+    {
+        vector<int>dp(5,1);
+        int sum=5;
+        if(n==1)
+            return sum;
+        n--;
+        while(n--)
+        {
+            for(int i=0;i<5;i++)
+            {
+                int t=dp[i];
+                dp[i]=sum;
+                sum-=t;
+            }
+            sum=dp[0]+dp[1]+dp[2]+dp[3]+dp[4];
+        }
+        return sum;
+    }
+};
+
+
+
+USING RECURSION
+----------------------
+
+class Solution {
+public:
+    int count=0;
+    void permute(int n,int ind)
+    {
+        if(n==0)
+        {
+            count++;
+            return;
+        }
+        for(int i=ind;i<5;i++)
+            permute(n-1,i);
+    }
+    int countVowelStrings(int n) 
+    {
+        permute(n,0);
+        return count;
+    }
+};
