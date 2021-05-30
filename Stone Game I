@@ -1,0 +1,35 @@
+//Recursion
+------------------------
+
+class Solution {
+public:
+    int permute(vector<int>&piles,int i,int j)
+    {
+        if(i>=j)return 0;
+        return max(piles[i]-permute(piles,i+1,j),piles[j]-permute(piles,i,j-1));
+    }
+    bool stoneGame(vector<int>& piles) 
+    {
+       return permute(piles,0,piles.size()-1);
+    }
+};
+
+Top_down Approach
+--------------------
+//Top Down approach
+
+class Solution {
+public:
+    int dp[501][501];
+    int permute(vector<int>&piles,int i,int j)
+    {
+        if(i>=j)return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+        return dp[i][j]=max(piles[i]-permute(piles,i+1,j),piles[j]-permute(piles,i,j-1));
+    }
+    bool stoneGame(vector<int>& piles) 
+    {
+        memset(dp,-1,sizeof dp);
+       return permute(piles,0,piles.size()-1)>0;
+    }
+};
