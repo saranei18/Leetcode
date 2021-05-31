@@ -1,0 +1,57 @@
+Top_down approach
+=--------------------
+
+class Solution {
+public:
+    int dp[50001];
+    int helper(vector<int>&p,int i)
+    {
+        if(i>=p.size())return 0;
+        if(dp[i]!=-1)return dp[i];
+        else 
+        {
+            int ans=INT_MIN;
+            ans=max(ans,p[i]-helper(p,i+1));
+            if(i+1<p.size())ans=max(ans,p[i]+p[i+1]-helper(p,i+2));
+            if(i+2<p.size())ans=max(ans,p[i]+p[i+1]+p[i+2]-helper(p,i+3));
+            
+            return dp[i]=ans;
+        }
+    }
+    string stoneGameIII(vector<int>& stoneValue) 
+    {
+        memset(dp,-1,sizeof dp);
+        int alice=helper(stoneValue,0); 
+        if(alice > 0)return "Alice";
+        if(alice==0)return "Tie";
+        return "Bob";
+    }
+};
+
+recursion
+------------------
+
+class Solution {
+public:
+    
+    int helper(vector<int>&p,int i)
+    {
+        if(i>=p.size())return 0;
+        else 
+        {
+            int ans=INT_MIN;
+            ans=max(ans,p[i]-helper(p,i+1));
+            if(i+1<p.size())ans=max(ans,p[i]+p[i+1]-helper(p,i+2));
+            if(i+2<p.size())ans=max(ans,p[i]+p[i+1]+p[i+2]-helper(p,i+3));
+            
+            return ans;
+        }
+    }
+    string stoneGameIII(vector<int>& stoneValue) 
+    {
+        int alice=helper(stoneValue,0); 
+        if(alice > 0)return "Alice";
+        if(alice==0)return "Tie";
+        return "Bob";
+    }
+};
