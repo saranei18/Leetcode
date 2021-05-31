@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int dp[366];
+    int helper(vector<int>&days,int lday,int index,vector<int>&costs)
+    {
+        if(index>lday)
+            return 0;
+        if(days[index]==0)
+            return helper(days,lday,index+1,costs);
+        
+        if(dp[index]!=-1)return dp[index];
+        int opt1=costs[0]+helper(days,lday,index+1,costs);
+        int opt2=costs[1]+helper(days,lday,index+7,costs);
+        int opt3=costs[2]+helper(days,lday,index+30,costs);
+        
+        dp[index]=min({opt1,opt2,opt3});
+        
+        return dp[index];
+    }
+    int mincostTickets(vector<int>& days, vector<int>& costs) 
+    {
+        vector<int>yr_days(366,0);
+        memset(dp,-1,sizeof dp);
+        for(int i=0;i<days.size();i++)
+            yr_days[days[i]]=1;
+        int lastday=days[days.size()-1];
+         return helper(yr_days,lastday,0,costs);
+    }
+};
