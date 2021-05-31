@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int waysToMakeFair(vector<int>& nums) 
+    {
+        int n=nums.size();
+        int counts=0;
+        int righteven=0;
+        int rightodd=0;
+        int lefteven=0;
+        int leftodd=0;
+        for(int i=0;i<n;i++)
+        {
+            if(i%2==0)righteven+=nums[i];
+            else rightodd+=nums[i];
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(i%2==0)
+                righteven-=nums[i];
+            else rightodd-=nums[i];
+            if(righteven+leftodd==rightodd+lefteven)
+                counts++;
+            if(i%2==0)
+                lefteven+=nums[i];
+            else leftodd+=nums[i];
+        }
+        return counts;
+    }
+};
