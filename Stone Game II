@@ -1,0 +1,55 @@
+Top- Down Approach
+-----------------------
+
+
+class Solution {
+public:
+    int dp[101][201];
+    int helper(vector<int>&piles,int i,int m)
+    {
+        if(i>=piles.size())return 0;
+            if(dp[i][m]!=-1)return dp[i][m];
+            int tot=0;
+            int ans=INT_MIN;
+            for(int j=0;j<2*m;j++)
+            {
+                if(i+j<piles.size())tot+=piles[i+j];
+                ans=max(ans,tot-helper(piles,j+i+1,max(m,j+1)));
+            }
+        return dp[i][m]=ans;
+    }
+    int stoneGameII(vector<int>& piles) 
+    {
+        memset(dp,-1,sizeof dp);
+        int diff=helper(piles,0,1);
+        int sum=0;
+        for(auto x:piles)sum+=x;
+        return (diff+sum)/2;
+    }
+};
+
+Recursion
+---------------
+
+class Solution {
+public:
+    int helper(vector<int>&piles,int i,int m)
+    {
+        if(i>=piles.size())return 0;
+            int tot=0;
+            int ans=INT_MIN;
+            for(int j=0;j<2*m;j++)
+            {
+                if(i+j<piles.size())tot+=piles[i+j];
+                ans=max(ans,tot-helper(piles,j+i+1,max(m,j+1)));
+            }
+        return ans;
+    }
+    int stoneGameII(vector<int>& piles) 
+    {
+        int diff=helper(piles,0,1);
+        int sum=0;
+        for(auto x:piles)sum+=x;
+        return (diff+sum)/2;
+    }
+};
