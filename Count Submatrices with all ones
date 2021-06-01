@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int numSubmat(vector<vector<int>>& mat) 
+    {
+        int row=mat.size();
+        int col=mat[0].size();
+        
+        for(int r=0;r<row;r++)
+        {
+            for(int c=col-2;c>=0;c--)
+            {
+                if(mat[r][c]==1)
+                    mat[r][c]+=mat[r][c+1];
+            }
+        }
+        int counts=0;
+        for(int r=0;r<row;r++)
+        {
+            for(int c=0;c<col;c++)
+            {
+                int minwidth=mat[r][c];
+                for(int d=r;d<row;d++)
+                {
+                    if(mat[r][c]==0)break;
+                    minwidth=min(mat[d][c],minwidth);
+                    counts+=minwidth;
+                }
+            }
+        }
+        return counts;
+    }
+};
