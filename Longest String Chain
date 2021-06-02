@@ -1,0 +1,108 @@
+Top-Down Approach
+-------------------------------
+
+
+class Solution {
+public:
+    int dp[1001][1001];
+    static int comp(string a,string b)
+    {
+        return a.size()<b.size();
+    }
+    
+    bool predecessor(string& prev, string& curr) 
+    {
+        int m = prev.length();
+        int n = curr.length();
+
+        if(n-m != 1 || m >= n)
+            return false;
+
+        int i = 0, j = 0;
+        while(i < m && j < n) {
+            if(prev[i] == curr[j]) {
+                i++;
+            }
+            j++;
+        }
+        return i==m;
+    }
+    
+    int helper(vector<string>s,int prev,int curr)
+{
+    if(curr==s.size())return 0;
+    int ans=0;
+        if(dp[prev+1][curr]!=-1)
+            return dp[prev+1][curr];
+    if(prev<0||predecessor(s[prev],s[curr]))
+    {
+        ans= 1+helper(s,curr,curr+1);
+    }
+
+    int nottaken=helper(s,prev,curr+1);
+
+    dp[prev+1][curr]= max(ans,nottaken);
+        return dp[prev+1][curr];
+}
+    
+    int longestStrChain(vector<string>& s1) 
+    {
+        memset(dp,-1,sizeof dp);
+        sort(s1.begin(),s1.end(),comp);
+        int n = s1.size();
+        int prev = -1;
+        int curr = 0;
+        return helper(s1, prev, curr);
+    }
+};
+
+bottom - up approach
+------------------------
+
+class Solution {
+public:
+     bool predecessor(string& prev, string& curr) 
+     {
+        int m = prev.length();
+        int n = curr.length();
+        
+        if(n-m != 1 || m >= n)
+            return false;
+        
+        int i = 0, j = 0;
+		
+        while(i < m && j < n) {
+            if(prev[i] == curr[j]) {
+                i++;
+            }
+            j++;
+        }
+        return i==m;
+    }
+    
+     static int comp(string a,string b)
+    {
+        return a.size()<b.size();
+    }
+    
+    int longestStrChain(vector<string>& s1) 
+    {
+        int n = s1.size();
+        vector<int>dp(n,1);
+        int result=1;
+        sort(s1.begin(),s1.end(),comp);
+       // memset(dp,1,sizeof dp);
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(predecessor(s1[j],s1[i]))
+                {
+                    dp[i]=max(dp[i],1+dp[j]);
+                    result=max(result,dp[i]);
+                } 
+            }  
+        }
+        return result;
+    }
+};
