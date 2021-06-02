@@ -1,0 +1,39 @@
+class Solution {
+public:
+    string longestDiverseString(int a, int b, int c) 
+    {
+        int total=a+b+c;
+        int curra=0,currb=0,currc=0;
+        
+        string res="";
+        
+        for(int i=0;i<total;i++)
+        {
+            if(a>=b && a>=c && curra!=2 || (a>0 && (currb==2 || currc==2) ))
+            {
+                res+="a";
+                a--;
+                currb=0;
+                currc=0;
+                curra++;
+            }
+            else if(b>=a && b>=c && currb!=2|| (b>0 && (curra==2 || currc==2) ))
+            {
+                res+="b";
+                b--;
+                curra=0;
+                currc=0;
+                currb++;
+            }
+            else if(c>=b && c>=a && currc!=2|| (c>0 && (currb==2 || curra==2) ))
+            {
+                res+="c";
+                c--;
+                currb=0;
+                curra=0;
+                currc++;
+            }
+        }
+        return res;
+    }
+};
