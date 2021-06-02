@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int dp[1001][1001];
+    int helper(vector<vector<int>>&books,int idx,int wid,int hmax,int sw)
+    {
+        if(idx>=books.size())return hmax;
+        if(dp[idx][wid]!=-1)return dp[idx][wid];
+        int v1=INT_MAX;
+        int v2=INT_MAX;
+        if(books[idx][0]>wid)
+            v2=hmax+helper(books,idx+1,sw-books[idx][0],books[idx][1],sw);
+        else
+            v1=min(helper(books,idx+1,wid-books[idx][0],max(hmax,books[idx][1]),sw),hmax+helper(books,idx+1,sw-books[idx][0],books[idx][1],sw));
+            
+            dp[idx][wid]= min(v2,v1);
+        return dp[idx][wid];
+    }
+    int minHeightShelves(vector<vector<int>>& books, int shelf_width) 
+    {
+        memset(dp,-1,sizeof dp);
+        return helper(books,0,shelf_width,0,shelf_width);
+    }
+};
