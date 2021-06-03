@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int>dp;
+    int helper(vector<int>& nums,int index,vector<int>&v)
+    {
+        if(index>=dp.size())return 0;
+        if(dp[index]!=-1)return dp[index];
+        int ans=INT_MIN;
+        //include
+        ans=v[index]+helper(nums,index+2,v);
+        //exclude
+        ans=max(ans,helper(nums,index+1,v));
+        
+        dp[index]=ans;
+        return dp[index];
+    }
+    int deleteAndEarn(vector<int>& nums) 
+    {
+        int maxi=INT_MIN;
+        for(int i=0;i<nums.size();i++)
+            maxi=max(maxi,nums[i]);
+        vector<int>v(maxi+1,0);
+        for(int i=0;i<nums.size();i++)
+        {
+            v[nums[i]]+=nums[i];
+        }
+        dp=vector<int>(maxi+1,-1);
+        return helper(nums,0,v);
+    }
+};
