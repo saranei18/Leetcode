@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int dp[59];
+    int helper(int num,int prod)
+    {
+        if(num==0)return 1;
+        int ans=INT_MIN;
+        if(dp[num]!=-1)return dp[num];
+        for(int i=1;i<=num;i++)
+        {
+            ans=max(ans,helper(num-i,prod)*i);
+        }
+        dp[num] = ans;
+        return dp[num];
+    }
+    int integerBreak(int n) 
+    {
+        int ans=INT_MIN;
+        memset(dp,-1,sizeof dp);
+        for(int i=1;i<n;i++)
+        {    
+            ans=max(ans,helper(n-i,i)*i);
+        }
+        return ans;
+    }
+};
