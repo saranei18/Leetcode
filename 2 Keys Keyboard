@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<vector<int>>dp;
+    int helper(int n,int res,int steps)
+    {
+        if(res==n)return 0;
+        if(res>n)return 1e6;
+        if(dp[res][steps]!=-1)return dp[res][steps];
+        
+        // if paste
+        
+        int taken=1+helper(n,res+steps,steps);
+        
+        // if paste and copy
+        int nottaken=2+helper(n,res+steps,steps+res);
+        
+        dp[res][steps]=min(taken,nottaken);
+        
+        return dp[res][steps];
+    }
+    int minSteps(int n) 
+    {
+        dp.resize(n+1,vector<int>(n+4,-1));
+        if(n==1)return 0;
+        return 1+helper(n,1,1);
+    }
+};
