@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int dp[40001][3];
+    int helper(vector<int>&nums,int n,int currsum)
+    {
+        if(n==0)
+        {
+            if(currsum%3)
+                return INT_MIN;
+            return 0;
+        }
+        if(dp[n][currsum]!=-1)return dp[n][currsum];
+        dp[n][currsum]= max(nums[n-1]+helper(nums,n-1,(nums[n-1]+currsum)%3),helper(nums,n-1,currsum));
+        return dp[n][currsum];
+    }
+    int maxSumDivThree(vector<int>& nums) 
+    {
+        memset(dp,-1,sizeof dp);
+        return helper(nums,nums.size(),0);
+    }
+};
