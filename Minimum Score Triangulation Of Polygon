@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int minScoreTriangulation(vector<int>& values) 
+    {
+        int dp[values.size()][values.size()];
+        for(int g=0;g<values.size();g++)
+        {
+            for(int i=0,j=g;j<values.size();j++,i++)
+            {
+                if(g==0)dp[i][j]=0;
+                else if(g==1)dp[i][j]=0;
+                else if(g==2)dp[i][j]=values[i]*values[i+1]*values[i+2];
+                else
+                {
+                    int min_=INT_MAX;
+                    for(int k=i+1;k<=j-1;k++)
+                    {
+                        int tri=values[k]*values[i]*values[j];
+                        int left=dp[i][k];
+                        int right=dp[k][j];
+                        int total=tri+left+right;
+                        min_=min(min_,total);
+                    }
+                    dp[i][j]=min_;
+                }
+            }
+                
+        }
+        return dp[0][values.size()-1];
+    }
+};
