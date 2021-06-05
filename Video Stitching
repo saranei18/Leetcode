@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int dp[101][101];
+    int helper(vector<vector<int>>&clips,int t,int index,int lastno)
+    {
+        if(lastno>=t)return 0;
+        if(index>=clips.size())return 100;
+        if(dp[index][lastno]!=-1)return dp[index][lastno];        
+        if(clips[index][0]<=lastno)
+            dp[index][lastno]=min(1+helper(clips,t,index+1,clips[index][1]),helper(clips,t,index+1,lastno));
+        else
+        dp[index][lastno]=100;
+        
+        return dp[index][lastno];
+    }
+    int videoStitching(vector<vector<int>>& clips, int time) 
+    {
+        sort(clips.begin(),clips.end());
+        memset(dp,-1,sizeof dp);
+        int res=helper(clips,time,0,0);
+        if(res>=100)return -1;
+        return res;
+    }
+};
