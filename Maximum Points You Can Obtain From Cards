@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int maxScore(vector<int>& a, int k) 
+    {
+        int currsum=accumulate(a.begin(),a.begin()+k,0);
+        int maxsum=currsum;
+        int end=a.size()-1;
+        for(int i=0;i<k;i++)
+        {
+            currsum+=a[end-i]-a[k-i-1];
+            maxsum=max(maxsum,currsum);
+        }
+        return maxsum;
+    }
+};
