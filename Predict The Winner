@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int helper(vector<int>&nums,int i,int j,vector<vector<int>>&dp)
+    {
+        if(i>j)return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+        if(i==j)
+            return nums[i];
+        
+        int a=nums[i]-helper(nums,i+1,j,dp);
+        int b=nums[j]-helper(nums,i,j-1,dp);
+        
+        dp[i][j]= max(a,b);
+        return dp[i][j];
+    }
+    bool PredictTheWinner(vector<int>& nums) 
+    {
+        vector<vector<int>>dp(nums.size(),vector<int>(nums.size(),-1));
+        return helper(nums,0,nums.size()-1,dp)>=0;
+    }
+};
