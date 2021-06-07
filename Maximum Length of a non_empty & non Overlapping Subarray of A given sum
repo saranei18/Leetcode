@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxNonOverlapping(vector<int>& nums, int target) 
+    {
+        map<int,int>mp;
+        mp[0]=-1;
+        int ans=0;
+        int sum=0;
+        int end=-1;
+        for(int i=0;i<nums.size();i++)
+        {
+            sum+=nums[i];
+            if(mp.find(sum-target)!=mp.end() and mp[sum-target]>=end)
+            {
+                ans++;
+                end=i;
+            }
+            mp[sum]=i;
+        }
+        return ans;
+    }
+};
