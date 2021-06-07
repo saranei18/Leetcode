@@ -1,0 +1,37 @@
+class Solution {
+public:
+    //int dp[10000000001][2]
+    int helper(int i,char sign,vector<int>&a)
+    {
+        if(i>=a.size())return 0;
+        int ans=0;
+        if(sign=='<')
+        {
+            if(a[i]<a[i-1])
+                ans+=helper(i+1,'>',a)+1;
+            else
+                ans= 0;
+        }
+        else if(sign=='>')
+        {
+            if(a[i]>a[i-1])
+                ans+=helper(i+1,'<',a)+1;
+            else
+                ans= 0;
+        }
+        return ans;
+    }
+    int maxTurbulenceSize(vector<int>& arr) 
+    {
+        int ans1=0;
+        int ans2=0;
+        int res=0;
+    for(int i=1;i<=arr.size();i++)
+        {
+            ans1=helper(i,'<',arr);
+            ans2=helper(i,'>',arr);
+            res=max(res,max(ans1,ans2));
+        }
+        return res+1;
+    }
+};
