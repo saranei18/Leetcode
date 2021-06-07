@@ -1,0 +1,25 @@
+class Solution {
+public:
+    double champagneTower(int poured, int query_row, int query_glass) 
+    {
+        double dp[102][102];
+        memset(dp,0,sizeof dp);
+        dp[0][0]=(double)poured;
+        
+        for(int i=0;i<=query_row;i++)
+        {
+            for(int j=0;j<=i;j++)
+            {
+                double temp=(dp[i][j]-1.0)/2.0;
+                if(temp>0)
+                {
+                    dp[i+1][j]+=temp;
+                    dp[i+1][j+1]+=temp;
+                }
+            }
+        }
+        if(dp[query_row][query_glass]>1)return 1;
+        else
+            return dp[query_row][query_glass];
+    }
+};
