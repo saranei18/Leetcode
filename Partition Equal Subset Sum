@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int dp[2001][10000];
+    int  helper(vector<int>&nums,int idx,int target)
+    {
+        if(idx>=nums.size())return 0;
+        
+        if(dp[idx][target]!=-1)return dp[idx][target];
+        
+        if(target==0)
+            return 1;
+        
+        int ans=0;
+        int res=0;
+        
+        if(nums[idx]<=target)
+        {
+            ans=(helper(nums,idx+1,target-nums[idx])||helper(nums,idx+1,target));
+        }
+        else
+            ans=helper(nums,idx+1,target);
+        res=max(res,ans);
+        dp[idx][target]=res;
+        return dp[idx][target];
+    }
+    bool canPartition(vector<int>& nums) 
+    {
+        int total=0;
+        for(int x:nums)
+            total+=x;
+        cout<<total<<endl;
+        memset(dp,-1,sizeof dp);
+        if(total%2==0)
+        return helper(nums,0,total/2);  
+        else
+            return false;
+        
+    }
+};
