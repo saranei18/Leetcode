@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int count=0;
+    int dp[100][2001];
+    int helper(vector<int>&nums,int i,int target,int sum)
+    {
+        if(dp[i][sum+1000]!=-1)return dp[i][sum+1000];
+        if(i>=nums.size())
+        {
+            if(sum==target)return 1;
+            else
+                return 0;
+        }
+        
+            int add=helper(nums,i+1,target,sum+nums[i]);
+            int subtract=helper(nums,i+1,target,sum-nums[i]);
+            
+        dp[i][sum+1000] = add+subtract;
+        return dp[i][sum+1000];
+    }
+    int findTargetSumWays(vector<int>& nums, int target) 
+    {
+        memset(dp,-1,sizeof dp);
+        return helper(nums,0,target,0); 
+    }
+};
