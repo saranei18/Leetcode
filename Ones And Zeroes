@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<vector<int>>>dp;
+    vector<pair<int,int>>vect;
+    void check(string s)
+    {
+        int count=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='1')count++;
+        }
+        vect.push_back({count,s.size()-count});
+    }
+    int helper(int idx,int n,int m)
+    {
+        if(idx>=vect.size())return 0;
+        if(dp[idx][n][m]!=-1)return dp[idx][n][m];
+        if(vect[idx].first > n || vect[idx].second > m)
+            return dp[idx][n][m]=helper(idx+1,n,m);
+        
+        return dp[idx][n][m]=max(1+helper(idx+1,n-vect[idx].first,m-vect[idx].second),helper(idx+1,n,m));
+    }
+    int findMaxForm(vector<string>& strs, int m, int n) 
+    {
+        dp.resize(strs.size()+1,vector<vector<int>>(n+1,vector<int>(m+1,-1)));
+        for(int i=0;i<strs.size();i++)
+        {
+            check(strs[i]);
+        }
+        return helper(0,n,m);
+    }
+};
