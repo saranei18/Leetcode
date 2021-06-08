@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int dp[1003][1003][3];
+    int helper(vector<int>& nums,int prev,int idx,char sign)
+    {
+        if(idx>=nums.size())return 0;
+        
+        if(dp[prev][idx][sign-'+']!=-1)return dp[prev][idx][sign-'+'];
+        if(nums[idx]-nums[prev]>0 && sign=='+')
+        {
+            dp[prev][idx][sign-'+']=max(1+helper(nums,idx,idx+1,'-'),helper(nums,prev,idx+1,sign));
+        }
+        else if(nums[idx]-nums[prev]<0 && sign=='-')
+        {
+            dp[prev][idx][sign-'+']=max(1+helper(nums,idx,idx+1,'+'),helper(nums,prev,idx+1,sign));
+        }
+        else
+            dp[prev][idx][sign-'+']=helper(nums,prev,idx+1,sign);
+        return dp[prev][idx][sign-'+'];
+    }
+    int wiggleMaxLength(vector<int>& nums) 
+    {
+        int res=0;
+        memset(dp,-1,sizeof dp);
+        for(int i=0;i<nums.size();i++)
+        {
+            res=max(res,1+helper(nums,i,i+1,'-'));
+            res=max(res,1+helper(nums,i,i+1,'+'));
+        }
+        return res;
+    }
+};
