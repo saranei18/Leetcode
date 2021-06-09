@@ -31,3 +31,13 @@ public:
         return res;
     }
 };
+
+
+
+
+
+
+KADANES ALGORITHM
+---------------------------
+
+https://leetcode.com/problems/maximum-subarray-sum-with-one-deletion/discuss/1233680/C%2B%2B-simple-Kadane
