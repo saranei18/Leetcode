@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int dp[100][102];
+    int helper(vector<pair<int,int>>v[],int src,int dest,int k)
+    {
+        if(k<0)return INT_MAX;
+        
+        if(src==dest)return 0;
+        if(dp[src][k]!=-1)return dp[src][k];
+        int ans=INT_MAX;
+        for(int i=0;i<v[src].size();i++)
+        {
+            int a=helper(v,v[src][i].first,dest,k-1);
+            ans=min(ans,(a==INT_MAX)?a:a+v[src][i].second);
+        }
+        return dp[src][k]=ans;
+    }
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) 
+    {
+        vector<pair<int,int>>v[n];
+        memset(dp,-1,sizeof dp);
+        for(int i=0;i<flights.size();i++)
+        {
+            v[flights[i][0]].push_back({flights[i][1],flights[i][2]});
+        }
+        int ans=helper(v,src,dst,k+1);
+        if(ans==INT_MAX)return -1;
+        return ans;
+    }
+};
