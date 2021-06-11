@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<vector<int>>dp;
+    int helper(vector<int>&n,vector<int>&m,int i,int k)
+    {
+        if(k>=m.size())return 0;
+        
+        if(dp[i][k]!=-1)return dp[i][k];
+        int j=n.size()-(k-i)-1;
+        int a=max(n[i]*m[k]+helper(n,m,i+1,k+1),n[j]*m[k]+helper(n,m,i,k+1));
+        return dp[i][k]=a;
+    }
+    int maximumScore(vector<int>& nums, vector<int>& multipliers) 
+    {
+        dp.resize(multipliers.size()+1,vector<int>(nums.size()+1,-1));
+        return helper(nums,multipliers,0,0);    
+    }
+};
