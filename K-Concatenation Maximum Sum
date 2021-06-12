@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int kadanesalgo(vector<int>&v)
+    {
+        int meh=0;
+        int msf=0;
+        
+        for(int i=0;i<v.size();i++)
+        {
+            meh+=v[i];
+            if(meh<v[i])
+                meh=v[i];
+            if(msf<meh)msf=meh;
+        }
+        return msf;
+    }
+    
+    int kConcatenationMaxSum(vector<int>& nums, int k) 
+    {
+        long long sum=0;
+        long long mod=1000000007;
+        vector<int>temp;
+        
+        if(k==1)
+        {
+            return kadanesalgo(nums);
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            sum=(sum%mod+nums[i]%mod)%mod;
+        }
+        
+        int i=2;
+        int res=0;
+        while(i!=0)
+        {
+            for(int j=0;j<nums.size();j++)
+            {
+                temp.push_back(nums[j]);
+            }
+            i--;
+        }
+        if(sum>0)
+        {
+            res=(kadanesalgo(temp)%mod+sum*(k-2)%mod)%mod;  
+        }
+        else if(sum<=0)
+        {
+            res=kadanesalgo(temp)%mod;
+        }
+        if(res>0)
+            return res;
+        else
+            return 0;
+    }
+};
