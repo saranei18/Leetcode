@@ -1,0 +1,20 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main()
+{
+    int k=2;
+    int n=3;
+
+    int same=k*1;
+    int diff=k*(k-1);
+    int total=same+diff;
+    for(int i=3;i<=n;i++)
+    {
+        same=diff*1;
+        diff=(k-1)*total;
+        total=same + diff;
+    }
+    cout<<total;
+}
